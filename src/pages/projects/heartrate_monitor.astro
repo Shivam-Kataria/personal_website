@@ -1,0 +1,122 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <div class="max-w-3xl mx-auto py-12">
+    <h1 class="text-4xl font-bold mb-4">
+      PPG Heart Rate Sensor
+    </h1>
+
+   <div class="flex justify-between items-center mb-8">
+      <p class="text-lg text-gray-600">
+        Electrical Lead
+      </p>
+      
+      <p class="text-lg text-gray-600">
+        Jan 2026 - Mar 2026
+      </p>
+</div>
+
+    <div class="space-y-6">
+
+      <div>
+        <h2 class="text-2xl font-semibold">Overview</h2>
+        <p>
+          Designed and prototyped a photoplethysmography (PPG) heart-rate sensor using an
+          infrared emitter and photodiode to measure blood volume changes in tissue.
+          The system converts extremely small photodiode currents into a filtered analog
+          waveform representing the cardiac cycle, which is then digitized using a
+          Schmitt-trigger comparator to produce heart-rate pulses.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-semibold">Problem</h2>
+        <ul class="list-disc ml-6">
+          <li>
+            Blood flow variations produce extremely small optical signals that generate
+            photodiode currents on the order of nanoamps to microamps.
+          </li>
+          <li>
+            The measured signal contains a large DC component caused by constant tissue
+            reflection, while the useful pulse signal is a small AC variation riding on top.
+          </li>
+          <li>
+            Motion, ambient light, and circuit noise can easily corrupt the measurement,
+            requiring careful analog signal conditioning.
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-semibold">Solution</h2>
+        <p>
+          I designed a multi-stage analog signal chain that converts the photodiode current
+          into a clean pulse waveform suitable for digital processing.
+        </p>
+
+        <ul class="list-disc ml-6 mt-4">
+          <li>Transimpedance amplifier to convert photodiode current into voltage</li>
+          <li>Bandpass filtering to isolate the physiological heart-rate band (~0.2–12 Hz)</li>
+          <li>Gain stages to amplify the small AC component</li>
+          <li>Schmitt trigger comparator to generate clean digital pulses</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-semibold">Signal Chain</h2>
+
+        <p class="mb-4">
+          The circuit consists of three main analog stages followed by a digital pulse output.
+        </p>
+
+        <ul class="list-disc ml-6 space-y-2">
+          <li>
+            <b>Stage 1 – Transimpedance Amplifier</b><br/>
+            Converts photodiode current (~1 µA DC with ~0.1 µA AC variation)
+            into a measurable voltage using an op-amp with a high feedback resistance.
+          </li>
+
+          <li>
+            <b>Stage 2 – Bandpass Filtering and Gain</b><br/>
+            A high-pass filter removes the DC offset caused by constant tissue reflection,
+            while a low-pass filter suppresses high-frequency noise.
+            This creates a bandpass response tuned to the physiological heart rate range.
+          </li>
+
+          <li>
+            <b>Stage 3 – Comparator (Schmitt Trigger)</b><br/>
+            The analog waveform is converted into a digital pulse using a hysteretic
+            comparator, ensuring robust switching even in the presence of noise.
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-semibold">Impact</h2>
+        <p>
+          The final system produces a clean pulse signal corresponding to each heartbeat.
+          This architecture demonstrates how extremely small biosignals can be extracted
+          using careful analog circuit design, signal conditioning, and threshold detection.
+          The project reinforced concepts in transimpedance amplification, filter design,
+          and analog-to-digital signal conversion.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-semibold">Technical Details</h2>
+
+        <ul class="list-disc ml-6 space-y-2">
+          <li>IR emitter wavelength: 940 nm</li>
+          <li>Photodiode current: ~1 µA DC with ~10–100 nA AC variation</li>
+          <li>Transimpedance gain: multi-megohm feedback resistance</li>
+          <li>Bandpass response: approximately 0.2 Hz – 12 Hz</li>
+          <li>Analog modeling and verification performed in LTSpice using Bode plots and transient simulations</li>
+        </ul>
+
+      </div>
+
+    </div>
+  </div>
+</BaseLayout>
