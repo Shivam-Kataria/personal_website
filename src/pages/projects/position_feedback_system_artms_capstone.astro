@@ -8,64 +8,169 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       Position Feedback System for ARTMS
     </h1>
 
-   <div class="flex justify-between items-center mb-8">
-      <p class="text-lg text-gray-600">
-        Embedded Systems Lead
-      </p>
-      
-      <p class="text-lg text-gray-600">
-        Sep 2025 - Apr 2026
-      </p>
-</div>
+    <div class="flex justify-between items-center mb-8">
+      <p class="text-lg text-gray-600">Embedded Systems Lead</p>
+      <div class="flex items-center gap-4">
+        <a href="https://github.com/Shivam-Kataria/ENGR499_Capstone" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-black transition-colors" aria-label="GitHub Repository">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+        </a>
+        <p class="text-lg text-gray-600">Sep 2025 - Apr 2026</p>
+      </div>
+    </div>
 
-    <div class="space-y-6">
+
+    <div class="space-y-10">
+
       <div>
-        <h2 class="text-2xl font-semibold">Overview</h2>
-        <p> Designing a distributed sensor checkpoint system for
-          <a href="https://artms.ca/qis-ecosystem/" target="_blank" class="underline font-medium">ARTMS QIS Ecosystem </a>
+        <h2 class="text-2xl font-semibold mb-3">Overview</h2>
+        <p>
+          Designed a distributed sensor checkpoint system for the
+          <a href="https://artms.ca/qis-ecosystem/" target="_blank" class="underline font-medium">ARTMS QIS Ecosystem</a>
           to provide real-time positional feedback of radioactive capsules traveling inside a sealed pneumatic
-        transfer hose within a radiation-constrained environment.
+          transfer hose within a radiation-constrained environment.
         </p>
+        <p class="mt-3">
+          ARTMS builds technology that helps manufacture medical radioactive isotopes using cyclotrons (particle accelerators).
+          Their process involves moving small radioactive capsules through a pneumatic transfer hose between station and cyclotron as shown in Figure 1.
+        </p>
+        <div class="mt-4">
+          <img src="/artms_qis_system.webp" alt="ARTMS QIS system overview" class="w-full rounded-lg" />
+          <p class="text-sm text-gray-500 mt-2 italic text-center">
+            Figure 1: The ARTMS QIS Ecosystem, a cyclotron-based system that produces medical radioactive isotopes.
+          </p>
+        </div>
       </div>
 
       <div>
-        <h2 class="text-2xl font-semibold">Problem</h2>
-        <ul class="list-disc ml-6">
-          <li>ARTMS relies on shielded pneumatic transport lines to move radioactive capsules between stations. In failure cases, capsules get stuck inside the transfer hose</li>
-          <li>The environment prevents visual inspection, making the capsule's exact position unknown. This lack of visibility leads to production delays, inefficient troubleshooting, and reduced system throughput</li>
+        <h2 class="text-2xl font-semibold mb-3">Problem</h2>
+        <ul class="list-disc ml-6 space-y-2">
+          <li>ARTMS relies on shielded pneumatic transport lines to move radioactive capsules between stations. In sporadic failure cases, capsules get stuck inside the transfer hose.</li>
+          <li>The environment prevents visual inspection, making the capsule's exact position unknown. This lack of visibility leads to production delays, inefficient troubleshooting, and reduced system throughput.</li>
         </ul>
       </div>
 
       <div>
-        <h2 class="text-2xl font-semibold">Solution</h2>
-        <p>I am designing a sensor checkpoint system to provide real-time position feedback of the capsule inside the hose. The system architecture I designed is:</p>
-          <img
-            src="/capstone_feedback_system_architecture.svg"
-            alt="Capstone system architecture diagram"
-            class="w-full max-w-3xl my-8"
-          />
-          <p>All of the sensor PCBs and main board run FreeRTOS. Each sensor PCB performs sensor fusion locally and transmits its status to the main board via CAN bus.</p>
+        <h2 class="text-2xl font-semibold mb-3">Our Solution</h2>
+        <p>
+          We designed a sensor checkpoint system to provide real-time position feedback of the capsule inside the hose.
+          Each checkpoint consists of a PCB with various sensors to detect the passing of the capsule.
+          The PCBs are mounted externally (Figure 2) along the hose at discrete checkpoints, relaying information to the main board
+          (connected to the client's HMI (Human Machine Interface)) to provide real-time feedback of the capsule's position.
+        </p>
+
+        <div class="mt-4">
+          <img src="/mechanical_design.png" alt="Mechanical Design (Coupler)" class="w-full rounded-lg" />
+          <p class="text-sm text-gray-500 mt-2 italic text-center">
+            Figure 2: Assembly of the Sensor PCB mounted in the mechanical enclosure.
+          </p>
+        </div>
+
+        <p class="mt-3">
+          Early in the project, three broad solution directions were explored: an external robot, an internal robot
+          traveling through the hose, and a passive sensor array mounted along the hose. The robot-based approaches
+          were ruled out due to feasibility, space concerns, and lack of real-time detection.
+        </p>
+        <p class="mt-3">
+          The sensor array approach was selected for its real-time feedback ability and non-invasive nature. From there, four candidate
+          sensing technologies were evaluated: inductive proximity, accelerometer, Hall effect, and Time-of-Flight (ToF), with hall effect being discarded due to
+          insufficient sensitivity for detecting the capsule.
+        </p>
+        
+        <p class="mt-3">
+          We then validated the chosen sensing approaches on a breadboard to confirm feasibility before committing to a PCB design as shown in Figure 3.
+        </p>
+        <div class="mt-4">
+          <img src="/breadboard_testing.png" alt="Breadboard prototype testing" class="w-full rounded-lg" />
+          <p class="text-sm text-gray-500 mt-2 italic text-center">
+            Figure 3: Early breadboard prototype used to validate sensor detection capability before PCB design began.
+          </p>
+        </div>
       </div>
 
       <div>
-        <h2 class="text-2xl font-semibold">Impact</h2>
+        <h2 class="text-2xl font-semibold mb-3">My Contributions</h2>
         <p>
-          The solution provides a real-time capsule feedback system connected to the client's HMI. This feedback system would reduce production delays while increasing throughput of the system.
+          I was responsible for, and took full ownership of firmware and PCB design of the Sensor PCB. I designed it from the ground up, from brainstoring to board bring-up.
+          The system architecture I designed is shown in Figure 4.
+        </p>
+        <div class="mt-4">
+          <img
+            src="/capstone_feedback_system_architecture.svg"
+            alt="System architecture diagram"
+            class="w-full max-w-3xl"
+          />
+          <p class="text-sm text-gray-500 mt-2 italic text-center">
+            Figure 4: Distributed system architecture, each sensor PCB collects sensor data and transmits
+            capsule detection status to the main board.
+          </p>
+        </div>
+        <p class="mt-4">
+          Three distinct sensors: inductive, inertial, and optical based were integrated to detect a
+          different physical property of the moving capsule, providing redundancy and improving reliability. On each Sensor PCB, the sensors communicate with the microcontroller unit (MCU).
+          I chose CAN (Controller Area Network) as the communication backbone along the hose due to its robustness in noisy industrial environments.
+        </p>
+        <p class="mt-4"> A labelled 3D render of the Sensor PCB is shown in Figure 5.</p>
+        <div class="mt-4">
+          <img src="/sensor_pcb_labelled.webp" alt="Labelled PCB render" class="w-full rounded-lg" />
+          <p class="text-sm text-gray-500 mt-2 italic text-center">
+            Figure 5: Labelled 3D render of the Sensor PCB showing key components.
+          </p>
+        </div>
+        
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-semibold mb-3">Testing & Validation</h2>
+        <p>
+          We thoroughly tested the system in a transfer hose test rig to validate the design and successful
+          capsule detection across different scenarios. The plot below shows one test run. Figure 6 shows that the checkpoint correctly
+          detected the capsule passing through, visible as a spike in both the accelerometer and Time-of-Flight (ToF) sensor readings.
+        </p>
+        <div class="mt-4">
+          <img src="/validation_plot.png" alt="Sensor validation test plot" class="w-full rounded-lg" />
+          <p class="text-sm text-gray-500 mt-2 italic text-center">
+            Figure 6: Accelerometer and ToF sensor output during a capsule transfer test, confirming successful detection.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-semibold mb-3">Impact</h2>
+        <p>
+          By giving ARTMS real-time visibility of capsule position for the first time, this system directly
+          reduces production downtime and speeds up troubleshooting when failures occur. A direct consequence
+          is increasing the availability of medical isotopes for patients in need, supporting ARTMS's mission
+          of enhancing human health through reliable isotope production.
         </p>
       </div>
 
       <div>
-        <h2 class="text-2xl font-semibold">Technical Details</h2>
-        <p>I designed the PCB schematics in Altium:</p>
-        
-          <div class="my-10">
+        <h2 class="text-2xl font-semibold mb-3">Technical Details</h2>
+        <p>
+          The PCB was designed as a 2-layer board. For a future iteration, a 4-layer board would be preferable
+          to provide an uninterrupted ground plane, improving signal integrity and reducing the number of vias.
+          Another consideration for future iterations is to use a single compact connector (such as an Ethernet
+          port) to carry both power and CAN lines, saving board space.
+        </p>
+        <p class="mt-3">PCB layout and schematics are shown in Figure 7 and Figure 8 respectively, designed using Altium.</p>
+        <div class="mt-4">
+          <img src="/sensorPCB_layout.png" alt="PCB layout in Altium Designer" class="w-full rounded-lg" />
+          <p class="text-sm text-gray-500 mt-2 italic text-center">
+            Figure 7: Final PCB layout in Altium Designer. Component placement and routing were optimized
+            for the physical size constraints.
+          </p>
+        </div>
+        <div class="mt-6">
           <iframe
             src="/sensorPCB_schematics.pdf"
             class="w-full h-[700px] border rounded-lg"
           ></iframe>
-          </div>
-
-         <p> PCB layout is currently in progress!</p>
+          <p class="text-sm text-gray-500 mt-2 italic text-center">
+            Figure 8: Full sensor PCB schematic (ommited part is test points and debug pins page)
+          </p>
+        </div>
       </div>
 
     </div>
